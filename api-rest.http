@@ -1,0 +1,18 @@
+# @name CurrencyConverter
+@baseUrl = http://localhost:8080/
+
+# @name HealCheck
+GET {{baseUrl}} HTTP/1.1
+###
+
+# @name Currencies
+GET {{baseUrl}}currencies HTTP/1.1
+###
+
+# @name CurrenciesById
+GET {{baseUrl}}currencies/1 HTTP/1.1
+###
+
+# @name ConvertCurrency
+GET {{baseUrl}}convert?base=USD&amount=222
+###

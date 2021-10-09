@@ -1,8 +1,7 @@
-import fastify, { RequestBodyDefault, FastifyInstance } from "fastify";
+import fastify, { RequestBodyDefault } from "fastify";
 import { ReplyDefault } from "fastify/types/utils";
-import { server } from "..";
 
-server.register(require("fastify-swagger"), {
+export default {
   routePrefix: "/documentation",
   swagger: {
     info: {
@@ -15,25 +14,27 @@ server.register(require("fastify-swagger"), {
       description: "Find more info here",
     },
     host: "localhost",
-    schemes: ["http"],
+    schemes: ["http", "https"],
     consumes: ["application/json"],
     produces: ["application/json"],
     tags: [
-      { name: "user", description: "User related end-points" },
-      { name: "code", description: "Code related end-points" },
+      { name: "healcheck", description: "Code related end-points", externalDocs: { description: "Find more info here", url: "https://swagger.io" } },
+      { name: "currencies", description: "Currencies related end-points", externalDocs: { description: "Find more info here", url: "https://swagger.io" } },
     ],
-    definitions: {
-      User: {
-        type: "object",
-        required: ["id", "email"],
-        properties: {
-          id: { type: "string", format: "uuid" },
-          firstName: { type: "string" },
-          lastName: { type: "string" },
-          email: { type: "string", format: "email" },
-        },
-      },
-    },
+    // definitions: {
+    //   Currency: {
+    //     type: "object",
+    //     required: ["name", "symbol", "value", "description", "updatedAt"],
+    //     properties: {
+    //       id: { type: "string", format: "uuid" },
+    //       name: { type: "string" },
+    //       description: { type: "string" },
+    //       symbol: { type: "string" },
+    //       value: { type: "Number" },
+    //       updatedAt: { type: "Date" },
+    //     },
+    //   },
+    // },
     securityDefinitions: {
       apiKey: {
         type: "apiKey",
@@ -65,9 +66,4 @@ server.register(require("fastify-swagger"), {
   staticCSP: true,
   transformStaticCSP: (header: Headers) => header,
   exposeRoute: true,
-});
-
-server.ready((err: any) => {
-  if (err) throw err;
-  // server.swagger();
-});
+};
