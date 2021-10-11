@@ -9,6 +9,7 @@ import fastifySwagger from "fastify-swagger";
 
 export const server = fastify({ logger: true });
 const PORT : string|number = process.env.PORT || 8080;
+const HOST : string = process.env.HOST || '0.0.0.0'
 
 const routes = [healCheckRoutes, authRoutes, currencyRoutes, convertRoutes];
 
@@ -23,7 +24,7 @@ routes.forEach((route) => {
 server.register(fastifySwagger as any, FastifySwaggerConfig);
 
 const start = async () => {
-  server.listen(PORT, '0.0.0.0', (err, address) => {
+  server.listen(PORT, HOST, (err, address) => {
     if (err) {
       console.error(err);
       process.exit(1);

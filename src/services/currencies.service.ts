@@ -1,16 +1,22 @@
+import { pgClient } from "../clients/pgClient";
+import { Currency, CurrencyFromBase } from "../types";
+
 function getRandom(floor: number, ceiling: number) {
   return Math.floor(Math.random() * (ceiling - floor + 1)) + floor;
 }
 
-interface Currency {
-  name: string;
-  symbol: string;
-  rate: number;
+function upsertCurrencies() {}
+
+function getCurrencies() {
+  return pgClient.query("SELECT * FROM currencies", (err: any, res: any) => {
+    if (err) {
+      console.log(err.stack);
+    } else {
+      console.log(res.rows);
+    }
+  });
 }
-interface CurrencyFromBase {
-  base: Currency;
-  currencies: Currency[];
-}
+
 function getCurrenciesFromBase(baseName: string): CurrencyFromBase {
   if (!baseName) throw new Error("baseName is required");
 
@@ -142,10 +148,7 @@ function getCurrenciesFromBase(baseName: string): CurrencyFromBase {
   };
 }
 
-export function convertCurrency(
-  fromCurrency: string,
-  amount: number,
-) {
+export function convertCurrency(fromCurrency: string, amount: number) {
   return getCurrenciesFromBase(fromCurrency);
   // const fromCurrencyIndex = stack.findIndex(
   //   (currency) => currency.name === fromCurrency

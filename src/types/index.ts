@@ -6,3 +6,13 @@ export interface IQuerystring {
 export interface IHeaders {
   "h-Custom": string;
 }
+
+export interface Currency {
+  name: string;
+  symbol: string;
+  rate: number;
+}
+export interface CurrencyFromBase {
+  base: Currency;
+  currencies: Currency[];
+}
